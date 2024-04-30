@@ -1,16 +1,27 @@
 "use client";
 
-import Image from "next/image";
 import { AddUsers } from "@/components/UsersInput";
-import { ItemEditLine } from "@/components/ItemLine";
 import { ItemList } from "@/components/ItemList";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { CalculateSplit } from "@/components/CalculateSplit";
+
+import { PayedBySelect } from "@/components/PayedBySelect";
+
 export default function Home() {
-  const doNothing = () => {};
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <AddUsers />
-      <ItemList />
-    </main>
+    <div>
+      <header className="flex justify-between items-center p-4">
+        <ThemeToggle />
+      </header>
+      <main className="flex min-h-screen flex-col items-center p-24">
+        <AddUsers />
+        <ItemList />
+        <div className="flex">
+          <PayedBySelect />
+          <CalculateSplit />
+        </div>
+      </main>
+    </div>
   );
 }

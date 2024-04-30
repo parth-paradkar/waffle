@@ -12,11 +12,11 @@ export const ItemList = () => {
   };
 
   return (
-    <div>
-      <Button onClick={() => addEmptyItem()}>Add Item</Button>
+    <div className="my-8">
       {items.map((item, index) => (
         <ItemEditLine key={index} index={index} />
       ))}
+      <Button onClick={() => addEmptyItem()}>Add Item</Button>
     </div>
   );
 };
