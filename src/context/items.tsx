@@ -23,7 +23,6 @@ const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<Item[]>([]);
 
   const addItem = (item: Item) => {
-    console.log("Inside addItem");
     setItems([...items, item]);
     console.log(items);
   };
@@ -36,11 +35,12 @@ const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateItem = (index: number, item: Item) => {
-    setItems([
+    const newItems = [
       ...items.slice(0, index),
       item,
       ...items.slice(index + 1, items.length),
-    ]);
+    ];
+    setItems(newItems);
   };
 
   const value = {

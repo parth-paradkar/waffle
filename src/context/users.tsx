@@ -4,12 +4,14 @@ import React, { createContext, useState } from "react";
 
 type UsersContextType = {
   users: string[];
+  setUsers: (users: string[]) => void;
   addUser: (name: string) => void;
   removeUser: (name: string) => void;
 };
 
 const UsersContext = createContext({
   users: [],
+  setUsers: (users: string[]) => {},
   addUser: (name: string) => {},
   removeUser: (name: string) => {},
 } as UsersContextType);
@@ -27,6 +29,7 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
 
   const value = {
     users,
+    setUsers,
     addUser,
     removeUser,
   };

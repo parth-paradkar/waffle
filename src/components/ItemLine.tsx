@@ -4,6 +4,8 @@ import { Input } from "./ui/input";
 import { ItemsContext } from "@/context/items";
 import { Button } from "./ui/button";
 import { BsTrash3 } from "react-icons/bs";
+import { MultiUserSelect } from "./MultiUserSelect";
+import { Option } from "./ui/multiselect";
 
 export function ItemEditLine({ index }: { index: number }) {
   const { items, updateItem, removeItem } = useContext(ItemsContext);
@@ -16,6 +18,12 @@ export function ItemEditLine({ index }: { index: number }) {
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const item = items[index];
     updateItem(index, { ...item, price: Number(e.target.value) });
+  };
+
+  const handleUsersAdd = (options: Option[]) => {
+    const item = items[index];
+    const users = options.map((option) => option.value);
+    updateItem(index, { ...item, users });
   };
 
   return (
@@ -37,6 +45,13 @@ export function ItemEditLine({ index }: { index: number }) {
             handlePriceChange(e)
           }
           value={items[index].price}
+        />
+        <MultiUserSelect
+          onChange={handleUsersAdd}
+          value={items[index].users.map((user) => ({
+            value: user,
+            label: user,
+          }))}
         />
       </div>
       <Button
