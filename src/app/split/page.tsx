@@ -6,6 +6,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { ItemsContext } from "@/context/items";
+import Footer from "@/components/Footer";
 
 export default function Split() {
   const router = useRouter();
@@ -45,6 +46,7 @@ export default function Split() {
           })}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

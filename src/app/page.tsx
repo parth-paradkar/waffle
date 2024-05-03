@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { UsersContext } from "@/context/users";
 import { ItemsContext } from "@/context/items";
 import { BsTrash3 } from "react-icons/bs";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const { setUsers } = useContext(UsersContext);
@@ -40,6 +41,7 @@ export default function Home() {
           <CalculateSplit />
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
