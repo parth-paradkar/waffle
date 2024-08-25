@@ -27,9 +27,8 @@ export function ItemEditLine({ index }: { index: number }) {
   };
 
   return (
-    <div className="flex items-center">
-      <div className="flex items-center space-x-2 my-4">
-        <div className="grow-0">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 my-4">
+        <div className="w-full sm:w-auto">
           <Input
             placeholder="Name"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -38,22 +37,25 @@ export function ItemEditLine({ index }: { index: number }) {
             value={items[index].name}
           />
         </div>
-        <Input
-          placeholder="Price"
-          type="number"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handlePriceChange(e)
-          }
-          value={items[index].price}
-        />
-        <MultiUserSelect
-          onChange={handleUsersAdd}
-          value={items[index].users.map((user) => ({
-            value: user,
-            label: user,
-          }))}
-        />
-      </div>
+        <div className="w-full sm:w-auto">
+          <Input
+            placeholder="Price"
+            type="number"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handlePriceChange(e)
+            }
+            value={items[index].price}
+          />
+        </div>
+        <div className="w-full sm:w-auto">
+          <MultiUserSelect
+            onChange={handleUsersAdd}
+            value={items[index].users.map((user) => ({
+              value: user,
+              label: user,
+            }))}
+          />
+        </div>
       <Button
         onClick={() => {
           removeItem(index);
