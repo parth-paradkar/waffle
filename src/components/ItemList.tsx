@@ -31,7 +31,7 @@ export const ItemList = () => {
     const itemsList = response.data.map((item) => {
       return {
         name: item.ITEM,
-        price: item.PRICE * item.QUANTITY,
+        price: item.PRICE,
         users: []
       }
     })
