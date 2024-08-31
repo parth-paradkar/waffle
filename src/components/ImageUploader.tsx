@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
 import { DialogFooter, DialogTrigger } from './ui/dialog';
+import { VscLoading } from "react-icons/vsc";
+import { TbFileUpload } from "react-icons/tb";
+import axios from 'axios';
+import { ItemsContext } from '@/context/items';
 
-const ImageUploader = ({ onUpload }: { onUpload: (imageStr: string) => void }) => {
+
+type ApiItem = {
+  QUANTITY: number;
+  ITEM: string;
+  PRICE: number;
+}
+
+
+const ImageUploader = () => {
+
+  const { setItems } = useContext(ItemsContext);
+
   const [preview, setPreview] = useState<string|null>(null);
   const [base64String, setBase64String] = useState<string|null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
@@ -33,9 +49,30 @@ const ImageUploader = ({ onUpload }: { onUpload: (imageStr: string) => void }) =
     }
   };
 
-  const onSubmit = () => {
+  const processImage = async (imageStr: string) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const headers = {
+      "Content-Type": "application/json",
+    }
+    if (!apiUrl) return;
+    setLoading(true);
+    const response = await axios.post<ApiItem[]>(apiUrl, { image: imageStr }, {
+      headers
+    });
+    const itemsList = response.data.map((item) => {
+      return {
+        name: item.ITEM,
+        price: item.PRICE,
+        users: []
+      }
+    })
+    setLoading(false);
+    setItems(itemsList)
+  }
+
+  const onSubmit = async () => {
     if (!base64String) return;
-    return onUpload(base64String);
+    await processImage(base64String);
   }
 
   return (
@@ -70,6 +107,9 @@ const ImageUploader = ({ onUpload }: { onUpload: (imageStr: string) => void }) =
                 <div>
                     <DialogFooter>
                         <Button onClick={onSubmit} disabled={!base64String}>
+                            {
+                              loading ? <VscLoading className="animate-spin" /> : <TbFileUpload />
+                            }
                             Submit
                         </Button>
                     </DialogFooter>
