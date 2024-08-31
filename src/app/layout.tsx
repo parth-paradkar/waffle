@@ -4,6 +4,7 @@ import "./globals.css";
 import { UsersProvider } from "@/context/users";
 import { ItemsProvider } from "@/context/items";
 import { ThemeProvider } from "@/components/themeprovider";
+import { AuthProvider } from "@/context/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,18 +21,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UsersProvider>
-          <ItemsProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </ItemsProvider>
-        </UsersProvider>
+        <AuthProvider>
+          <UsersProvider>
+            <ItemsProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </ItemsProvider>
+          </UsersProvider>
+        </AuthProvider>
       </body>
     </html>
   );
