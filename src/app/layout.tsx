@@ -5,6 +5,7 @@ import { UsersProvider } from "@/context/users";
 import { ItemsProvider } from "@/context/items";
 import { ThemeProvider } from "@/components/themeprovider";
 import { AuthProvider } from "@/context/auth";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,7 @@ export default function RootLayout({
                 enableSystem
                 disableTransitionOnChange
               >
-                {children}
+                  {children}
               </ThemeProvider>
             </ItemsProvider>
           </UsersProvider>

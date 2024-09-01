@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { ItemsContext } from "@/context/items";
 import Footer from "@/components/Footer";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 export default function Split() {
   const router = useRouter();
@@ -27,26 +28,28 @@ export default function Split() {
   })();
 
   return (
-    <div>
-      <header className="flex justify-between items-center p-4">
-        <ThemeToggle />
-        <h1>Waffle</h1>
-        <Button onClick={() => router.push("/")}>
-          <IoArrowBack size={16} /> Go back
-        </Button>
-      </header>
-      <main className="flex min-h-screen flex-col items-center p-24">
-        <div>
-          {Object.keys(shares).map((user, index) => {
-            return (
-              <div key={index}>
-                {user} owes {shares[user]}
-              </div>
-            );
-          })}
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <ProtectedRoute>
+      <div>
+        <header className="flex justify-between items-center p-4">
+          <ThemeToggle />
+          <h1>Waffle</h1>
+          <Button onClick={() => router.push("/")}>
+            <IoArrowBack size={16} /> Go back
+          </Button>
+        </header>
+        <main className="flex min-h-screen flex-col items-center p-24">
+          <div>
+            {Object.keys(shares).map((user, index) => {
+              return (
+                <div key={index}>
+                  {user} owes {shares[user]}
+                </div>
+              );
+            })}
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </ProtectedRoute>
   );
 }

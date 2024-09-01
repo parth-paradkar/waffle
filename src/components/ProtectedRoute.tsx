@@ -1,23 +1,28 @@
 // components/ProtectedRoute.tsx
+"use client"
+
+
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { getSupabaseClient } from '../lib/supabase'
+import { useRouter } from 'next/navigation';
+import { useUser } from '../context/auth';
 
-export function withAuth<P extends object>(WrappedComponent: React.ComponentType<P>) {
-  return (props: P) => {
-    const router = useRouter();
-
-    useEffect(() => {
-      const checkUser = async () => {
-        const supabase = getSupabaseClient();
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-          router.push('/login');
-        }
-      };
-      checkUser();
-    }, []);
-
-    return <WrappedComponent {...props} />;
-  };
+interface ProtectedRouteProps {
+  children: React.ReactNode;
 }
+
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const router = useRouter();
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/login');
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return null; // or a loading spinner
+  }
+
+  return <>{children}</>;
+};

@@ -1,6 +1,8 @@
+"use client";
+
 // pages/login.tsx
 import { NextPage } from "next";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { getSupabaseClient } from "../../lib/supabase";
 import GoogleSignIn from "../../components/GoogleSignIn";

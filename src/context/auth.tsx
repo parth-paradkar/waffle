@@ -1,4 +1,5 @@
 // context/UserContext.tsx
+"use client"
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { getSupabaseClient } from '../lib/supabase';
